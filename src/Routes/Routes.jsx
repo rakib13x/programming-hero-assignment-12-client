@@ -34,4 +34,53 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
+    children: [
+      //normal user routes
+      {
+        path: "book-a-parcel",
+        element: <BookAParcel />,
+      },
+      {
+        path: "myParcels",
+        element: <MyParcels />,
+      },
+      {
+        path: "myProfile",
+        element: <MyProfile />,
+      },
+      //deliveryman routes
+      {
+        path: "my-delivery-list",
+        element: <MyDeliveryList />,
+      },
+      {
+        path: "my-reviews",
+        element: <MyReviews />,
+      },
+      //admin routes
+      {
+        path: "all-parcels",
+        element: <AllParcels />,
+      },
+      {
+        path: "all-users",
+        element: <AllUsers />,
+      },
+      {
+        path: "all-delivery-men",
+        element: <AllDeliveryMen />,
+      },
+      {
+        path: "statistics",
+        element: <Statistics />,
+      },
+    ],
+  },
 ]);

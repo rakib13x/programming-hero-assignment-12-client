@@ -20,6 +20,9 @@ const Navbar = () => {
       <li>
         <Link to="/">Home</Link>
       </li>
+      <li>
+        <Link to="/dashboard">Dashboard</Link>
+      </li>
       {user ? (
         <>
           <button onClick={handleLogOut} className="btn btn-ghost">
@@ -108,7 +111,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/dashboard">Dashboard</Link>
               </li>
               {user ? (
                 <>
