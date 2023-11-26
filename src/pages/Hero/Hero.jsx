@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import set from "../../../public/set.json";
+import set from "../../assets/set.json";
 const Hero = () => {
   return (
     <div>

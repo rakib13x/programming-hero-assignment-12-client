@@ -2,8 +2,13 @@ import { useContext } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Link } from "react-router-dom";
+import useAdmin from "../../hooks/useAdmin";
+import useDeliveryMan from "../../hooks/useDeliveryMan";
 const Navbar = () => {
+  const [isAdmin] = useAdmin();
+  const [isDeliveryMan] = useDeliveryMan();
   const { user, logOut } = useContext(AuthContext);
+  console.log(user);
   const handleLogOut = () => {
     logOut()
       .then(() => {})
@@ -89,10 +94,7 @@ const Navbar = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
+                <img alt="Tailwind CSS Navbar component" src={user?.photoURL} />
               </div>
             </label>
             <ul
