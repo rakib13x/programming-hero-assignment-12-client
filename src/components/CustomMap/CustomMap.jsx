@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 
-const Map = ({ onLocationSelect }) => {
+const CustomMap = ({ onLocationSelect }) => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const handleLocationSelect = (event) => {
     const { lat, lng } = event.latlng;
     setSelectedLocation({ lat, lng });
     onLocationSelect({ lat, lng });
+    const modal = document.getElementById("my_modal_1");
+    modal.close();
   };
 
   const LocationMarker = () => {
@@ -35,4 +37,4 @@ const Map = ({ onLocationSelect }) => {
   );
 };
 
-export default Map;
+export default CustomMap;
