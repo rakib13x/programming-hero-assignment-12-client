@@ -98,8 +98,56 @@ const AllUsers = () => {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>
+                    {user.role}
                     {user.role === "admin" ? (
-                      "Admin"
+                      <>
+                        <button
+                          onClick={() => handleMakeDeliveryMan(user)}
+                          className="btn  btn-lg bg-orange-500 text-white"
+                        >
+                          Make deliveryman
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        {/* <button
+                          className="btn"
+                          onClick={() =>
+                            document.getElementById("my_modal_1").showModal()
+                          }
+                        >
+                          open modal
+                        </button>
+                        <dialog id="my_modal_1" className="modal">
+                          <div className="modal-box">
+                            <h3 className="font-bold text-lg text-center">
+                              do you want a change role here?
+                            </h3>
+                            <p className="py-4"></p>
+                            <div className="modal-action">
+                              <form method="dialog">
+                                <div className="space-x-3">
+                                  <button
+                                    onClick={() => handleMakeAdmin(user)}
+                                    className="btn  btn-lg bg-orange-500 text-white"
+                                  >
+                                    Make Admin
+                                  </button>
+                                  <button
+                                    onClick={() => handleMakeDeliveryMan(user)}
+                                    className="btn  btn-lg bg-orange-500 text-white"
+                                  >
+                                    Make deliveryman
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </dialog>
+                      </>
+                    )}
+                    {user.role === "deliveryman" ? (
+                      "deliveryman"
                     ) : (
                       <>
                         <button
@@ -115,29 +163,38 @@ const AllUsers = () => {
                             <h3 className="font-bold text-lg text-center">
                               do you want a change role here?
                             </h3>
-                            <p className="py-4">
-                              <div className="space-x-3">
-                                <button
-                                  onClick={() => handleMakeAdmin(user)}
-                                  className="btn  btn-lg bg-orange-500 text-white"
-                                >
-                                  Make Admin
-                                </button>
-                                <button
-                                  onClick={() => handleMakeDeliveryMan(user)}
-                                  className="btn  btn-lg bg-orange-500 text-white"
-                                >
-                                  Make deliveryman
-                                </button>
-                              </div>
-                            </p>
+                            <p className="py-4"></p>
                             <div className="modal-action">
                               <form method="dialog">
-                                <button className="btn">Close</button>
+                                <div className="space-x-3">
+                                  
+                                </div>
                               </form>
                             </div>
                           </div>
-                        </dialog>
+                        </dialog> */}
+                        <button
+                          onClick={() => handleMakeAdmin(user)}
+                          className="btn  btn-lg bg-orange-500 text-white"
+                        >
+                          Make Admin
+                        </button>
+                      </>
+                    )}
+                    {user.role === "user" && (
+                      <>
+                        <button
+                          onClick={() => handleMakeDeliveryMan(user)}
+                          className="btn  btn-lg bg-orange-500 text-white"
+                        >
+                          Make deliveryman
+                        </button>
+                        <button
+                          onClick={() => handleMakeAdmin(user)}
+                          className="btn  btn-lg bg-orange-500 text-white"
+                        >
+                          Make Admin
+                        </button>
                       </>
                     )}
                   </td>
