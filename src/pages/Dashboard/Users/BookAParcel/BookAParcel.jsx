@@ -47,6 +47,7 @@ const BookAParcel = () => {
   const onSubmit = async (data) => {
     console.log(data);
 
+    const bookingDate = new Date();
     // const res = await axiosPublic.post({
     //   headers: {
     //     "content-type": "multipart/form-data",
@@ -66,12 +67,13 @@ const BookAParcel = () => {
       date: data.date,
       latitude: data.latitude,
       longitude: data.longitude,
-      price: data.price,
+      price: parseFloat(data.price),
       status: "pending",
+      bookingDate: bookingDate,
     };
     console.log(bookingItem);
 
-    const bookingRes = await axiosSecure.post("/booking", bookingItem);
+    const bookingRes = await axiosSecure.post("/bookings", bookingItem);
     console.log(bookingRes.data);
     if (bookingRes.data.insertedId) {
       reset();
@@ -292,8 +294,8 @@ const BookAParcel = () => {
                 </div>
               </dialog>
             </div>
-            <button className="btn">Book Your Parcel</button>
           </div>
+          <button className="btn">Book Your Parcel</button>
         </form>
       </div>
     </div>
