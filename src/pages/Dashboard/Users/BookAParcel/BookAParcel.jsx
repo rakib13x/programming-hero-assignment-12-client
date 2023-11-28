@@ -48,6 +48,7 @@ const BookAParcel = () => {
     console.log(data);
 
     const bookingDate = new Date();
+    const deliveryMenID = "";
     // const res = await axiosPublic.post({
     //   headers: {
     //     "content-type": "multipart/form-data",
@@ -70,6 +71,7 @@ const BookAParcel = () => {
       price: parseFloat(data.price),
       status: "pending",
       bookingDate: bookingDate,
+      deliveryMenID: deliveryMenID,
     };
     console.log(bookingItem);
 
