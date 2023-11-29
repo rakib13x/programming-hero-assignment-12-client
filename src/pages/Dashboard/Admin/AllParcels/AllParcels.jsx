@@ -8,8 +8,10 @@ import Swal from "sweetalert2";
 
 const AllParcels = () => {
   console.log("Component rendered");
+  const [selectedDeliveryManName, setSelectedDeliveryManName] = useState("");
   const [bookings, setBookings] = useState([]);
-  const [selectedDeliveryManID, setSelectedDeliveryManID] = useState(null); // Set an initial value or null
+  const [selectedDeliveryManID, setSelectedDeliveryManID] = useState(null);
+  const [selectedDeliveryManMail, setSelectedDeliveryManMail] = useState(null);
   const axiosSecure = useAxiosSecure();
   const {
     data: parcels = [],
@@ -35,14 +37,13 @@ const AllParcels = () => {
 
   const handleOnTheWay = (item) => {
     const deliveryMenID = selectedDeliveryManID || null;
+    const deliveryMenMail = selectedDeliveryManName;
 
     axiosSecure
-      .patch(`/bookings/${item._id}`, { deliveryMenID })
+      .patch(`/bookings/${item._id}`, { deliveryMenID, deliveryMenMail })
       .then((res) => {
         console.log("Patch Response:", res.data);
-
-        document.getElementById("my_modal_1").close();
-
+        document.getElementById(`my_modal_${item._id}`).close();
         // Check if the status indicates success (status code 200)
         if (res.status === 200 && res.data.success) {
           console.log("Booking updated successfully");
@@ -55,6 +56,7 @@ const AllParcels = () => {
                     ...booking,
                     status: "on the way",
                     deliveryMenID: selectedDeliveryManID,
+                    deliveryMenMail: selectedDeliveryManName,
                   }
                 : booking
             )
@@ -85,6 +87,7 @@ const AllParcels = () => {
   };
 
   console.log(selectedDeliveryManID);
+  console.log(selectedDeliveryManMail);
   return (
     <div>
       <div className="overflow-x-auto ">
@@ -145,16 +148,33 @@ const AllParcels = () => {
 
                             <select
                               className="select select-bordered"
-                              onChange={(e) =>
-                                setSelectedDeliveryManID(e.target.value)
-                              }
+                              onChange={(e) => {
+                                setSelectedDeliveryManID(e.target.value);
+                                const selectedDeliveryMan = deliverymen.find(
+                                  (man) => man._id === e.target.value
+                                );
+                                // Assuming you have a state variable like selectedDeliveryManName
+                                setSelectedDeliveryManName(
+                                  selectedDeliveryMan
+                                    ? selectedDeliveryMan.email
+                                    : ""
+                                );
+                              }}
                             >
-                              {deliveryman.map((man) => (
+                              {deliverymen.map((man) => (
                                 <option key={man._id} value={man._id}>
                                   {man.name}:{man._id}
                                 </option>
                               ))}
                             </select>
+
+                            {/* Add this input field for displaying the selected delivery man's name */}
+                            <input
+                              type="text"
+                              value={selectedDeliveryManName}
+                              readOnly
+                              placeholder="Selected Delivery Man"
+                            />
                           </div>
                           <div className="mt-6 flex ml-[60px]">
                             <button
