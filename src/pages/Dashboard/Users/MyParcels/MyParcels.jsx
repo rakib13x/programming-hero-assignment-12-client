@@ -1,16 +1,18 @@
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { FaTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import useBooking from "../../../../hooks/useBooking";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+
 const MyParcels = () => {
   const [booking, refetch] = useBooking();
-  const totalPrice = booking.reduce(
-    (total, item) => total + parseFloat(item.price),
-    0
-  );
-  console.log(totalPrice);
+  const [filter, setFilter] = useState("All");
+  const [filteredBooking, setFilteredBooking] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   const axiosSecure = useAxiosSecure();
+
   const handleDelete = (id) => {
     console.log("item deleted", id);
     Swal.fire({
@@ -23,11 +25,6 @@ const MyParcels = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
         axiosSecure.delete(`/booking/${id}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
@@ -41,14 +38,72 @@ const MyParcels = () => {
       }
     });
   };
+
+  const applyFilter = (data, selectedFilter) => {
+    if (!Array.isArray(data)) {
+      return [];
+    }
+
+    if (selectedFilter === "All") {
+      return data;
+    } else {
+      return data.filter(
+        (item) =>
+          item.status &&
+          item.status.toLowerCase() === selectedFilter.toLowerCase()
+      );
+    }
+  };
+
+  const handleChangeFilter = (event) => {
+    const selectedFilter = event.target.value;
+    setFilter(selectedFilter);
+  };
+
+  useEffect(() => {
+    setFilter("All");
+    // Set default filter value
+    const fetchData = async () => {
+      try {
+        const bookingData = await refetch();
+        setFilteredBooking(applyFilter(bookingData, "All"));
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [refetch]);
+
+  useEffect(() => {
+    if (booking) {
+      const updatedFilteredBooking = applyFilter(booking, filter);
+      setFilteredBooking(updatedFilteredBooking);
+      // Calculate total price
+      const total = updatedFilteredBooking.reduce(
+        (acc, item) => acc + parseFloat(item.price),
+        0
+      );
+      setTotalPrice(total);
+    }
+  }, [booking, filter]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <div className="flex justify-evenly mb-[32px]">
-        <h2 className="text-4xl">Items : {booking.length}</h2>
         <h2 className="text-4xl">
-          Total Price : {Number(totalPrice).toFixed(2)}
+          Items: {filteredBooking.length || booking.length}
         </h2>
-        {booking.length ? (
+        <h2 className="text-4xl">
+          Total Price: {Number(totalPrice).toFixed(2)}
+        </h2>
+        {filteredBooking.length ? (
           <Link to="/dashboard/payment">
             <button className="btn btn-primary">Pay</button>
           </Link>
@@ -59,9 +114,28 @@ const MyParcels = () => {
         )}
       </div>
 
-      <div className="overflow-x-auto ">
+      <div className="overflow-x-auto">
+        <div className="">
+          <div className="divider divider-end text-end flex justify-end pt-8">
+            <div className="pb-8">
+              <select
+                className="select select-bordered w-[160px]"
+                value={filter}
+                onChange={handleChangeFilter}
+              >
+                <option disabled selected>
+                  filter by status
+                </option>
+                <option>All</option>
+                <option>pending</option>
+                <option>on the way</option>
+                <option>delivered</option>
+                <option>cancelled</option>
+              </select>
+            </div>
+          </div>
+        </div>
         <table className="table w-full">
-          {/* head */}
           <thead>
             <tr>
               <th>#</th>
@@ -69,10 +143,13 @@ const MyParcels = () => {
               <th>Name</th>
               <th>Price</th>
               <th>Action</th>
+              <th>Status</th>
+              <th>Update</th>
+              <th>Cancel</th>
             </tr>
           </thead>
           <tbody>
-            {booking.map((item, index) => (
+            {filteredBooking.map((item, index) => (
               <tr key={item._id}>
                 <th>{index + 1}</th>
                 <td>
@@ -97,6 +174,43 @@ const MyParcels = () => {
                     <FaTrashAlt className="text-red-600" />
                   </button>
                 </th>
+                <td>
+                  {item.status === "delivered" ? (
+                    <>
+                      <button className="btn btn-secondary">review</button>
+                    </>
+                  ) : (
+                    <>{item.status}</>
+                  )}
+                </td>
+                <td>
+                  {item.status === "pending" ? (
+                    <button
+                      className="btn"
+                      onClick={() => handleUpdate(item._id)}
+                    >
+                      Update
+                    </button>
+                  ) : (
+                    <button className="btn" disabled>
+                      Update
+                    </button>
+                  )}
+                </td>
+                <td>
+                  {item.status === "pending" ? (
+                    <button
+                      className="btn"
+                      onClick={() => handleUpdate(item._id)}
+                    >
+                      Cancel
+                    </button>
+                  ) : (
+                    <button className="btn" disabled>
+                      Cancel
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

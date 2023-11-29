@@ -7,6 +7,7 @@ const useBooking = () => {
   //tan stack query
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  console.log(user.email);
   const { refetch, data: booking = [] } = useQuery({
     queryKey: ["booking", user?.email],
     queryFn: async () => {

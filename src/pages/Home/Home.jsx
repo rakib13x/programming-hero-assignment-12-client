@@ -3,6 +3,7 @@ import Hero from "../Hero/Hero";
 import FastDelivery from "../FastDelivery/FastDelivery";
 import Service from "./../Service/Service";
 import ParcelBooking from "./ParcelBooking";
+import CountNumber from "../../components/CountNumber/CountNumber";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <Hero />
       <FastDelivery />
       <Service />
+      <CountNumber />
       {/* <ParcelBooking /> */}
     </div>
   );
