@@ -18,6 +18,8 @@ import AdminRoute from "./AdminRoute";
 import AdminHome from "../pages/Dashboard/Admin/AdminHome/AdminHome";
 import GiveReview from "../pages/Dashboard/Users/GiveReview/GiveReview";
 import ProductDeliveryReview from "../pages/Dashboard/DeliveryMen/ProductDeliveryReview/ProductDeliveryReview";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +79,14 @@ export const router = createBrowserRouter([
       {
         path: "my-reviews",
         element: <MyReviews />,
+      },
+      {
+        path: "payment",
+        element: <Payment />,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory />,
       },
       //admin routes
       {

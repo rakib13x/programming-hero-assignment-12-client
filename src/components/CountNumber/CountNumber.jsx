@@ -4,52 +4,41 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 const CountNumber = () => {
-  //   useEffect(() => {
-  //     // Fetch the number of users from your backend
-  //     fetch("http://localhost:3000/users")
-  //       .then((response) => response.json())
-  //       .then((data) => setUserCount(data.count))
-  //       .catch((error) => console.error("Error fetching user count:", error));
-  //   }, []);
+  const axiosPublic = useAxiosPublic();
+  const { data: stats = [] } = useQuery({
+    queryKey: ["stats"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/stats");
+      console.log(res.data);
+      return res.data;
+    },
+  });
 
-  //   const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN;
-  //   console.log(ACCESS_TOKEN);
-
-  //   const axiosPublic = useAxiosPublic();
-  //   const { data: bookings = [], refetch } = useQuery({
-  //     queryKey: ["bookings"],
-  //     queryFn: async () => {
-  //       const res = await axiosPublic.get("/bookings");
-  //       //   console.log(res.data);
-  //       return res.data;
-  //     },
-  //   });
-
-  //   const [userCount, setUserCount] = useState(0);
-
-  //   useEffect(() => {
-  //     // Fetch the number of users from your backend
-  //     fetch("/users", {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Bearer ${ACCESS_TOKEN}`,
-  //         // Replace with your actual token
-  //       },
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         // Assuming your API response structure has a property like 'totalUsers'
-  //         console.log(data);
-  //       })
-  //       .catch((error) => console.error("Error fetching user count:", error));
-  //   }, []);
-
+  const status = [
+    { name: "registered Users", stat: stats.users },
+    { name: "total Booking", stat: stats.booked },
+    { name: "Parcel Delivered", stat: stats.delivered[0].totalDelivered },
+  ];
   return (
-    <div className="App">
-      <h1>GEEKSFORGEEKS</h1>
-      <div style={{ fontSize: "150px" }}>
-        <CountUp start={0} end={10000} duration={10000} />
-      </div>
+    <div className="pb-8 pt-8">
+      <h3 className="  leading-6 text-gray-900 text-4xl font-bold text-center">
+        Stats
+      </h3>
+      <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {status.map((item) => (
+          <div
+            key={item.name}
+            className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6"
+          >
+            <dt className="truncate text-sm font-medium text-gray-500">
+              {item.name}
+            </dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
+              <CountUp start={0} end={item.stat} duration={300} />
+            </dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 };
