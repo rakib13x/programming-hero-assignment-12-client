@@ -39,7 +39,7 @@ const MyDeliveryList = () => {
               booking._id === _id
                 ? {
                     ...booking,
-                    productStatus: "cancelled",
+                    status: "cancelled",
                   }
                 : booking
             )
@@ -82,16 +82,16 @@ const MyDeliveryList = () => {
               booking._id === _id
                 ? {
                     ...booking,
-                    orderStatus: "delivered",
+                    status: "delivered",
                   }
                 : booking
             )
           );
 
           Swal.fire({
-            title: `Order Cancelled`,
-            text: `You have cancelled this order`,
-            icon: "error",
+            title: `Order Delivered`,
+            text: `You have delivered this order`,
+            icon: "success",
           });
         } else {
           console.log("Booking not found or not updated");
@@ -154,19 +154,28 @@ const MyDeliveryList = () => {
                     </td>
 
                     <td>
-                      <button onClick={() => handleCancel(user._id)}>
-                        {user.productStatus ? user.productStatus : "cancel"}
-                      </button>
+                      {user.status === "on the way" ? (
+                        <button
+                          className="btn"
+                          onClick={() => handleCancel(item._id)}
+                        >
+                          Cancel
+                        </button>
+                      ) : (
+                        <button className="btn" disabled>
+                          Cancelled
+                        </button>
+                      )}
                     </td>
                     <td>
-                      {user.orderStatus === "delivered" ? (
+                      {user.status === "delivered" ? (
                         <button className="btn btn-secondary">Review</button>
                       ) : (
                         <button
                           className="btn btn-secondary"
                           onClick={() => handleDeliver(user._id)}
                         >
-                          {user.orderStatus ? user.orderStatus : "deliver"}
+                          {user.status ? user.status : "deliver"}
                         </button>
                       )}
                     </td>

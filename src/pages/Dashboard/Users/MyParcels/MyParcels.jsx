@@ -93,7 +93,49 @@ const MyParcels = () => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+  const handleCancel = (_id) => {
+    axiosSecure
+      .put(`/bookings/cancel/${_id}`)
+      .then((res) => {
+        console.log("Put Response:", res.data);
+        if (res.status === 200 && res.data.success) {
+          console.log("Booking updated successfully");
+          refetch(); // Ensure this is working
+          setBookings((prevBookings) =>
+            prevBookings.map((booking) =>
+              booking._id === _id
+                ? {
+                    ...booking,
+                    status: "cancelled",
+                  }
+                : booking
+            )
+          );
 
+          Swal.fire({
+            title: `Order Cancelled`,
+            text: `You have cancelled this order`,
+            icon: "error",
+          });
+        } else {
+          console.log("Booking not found or not updated");
+          Swal.fire({
+            title: "Error",
+            text: "Booking not found or not updated",
+            icon: "error",
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error in PUT request:", error);
+        Swal.fire({
+          title: "Error",
+          text: "An error occurred while updating the booking",
+          icon: "error",
+        });
+      });
+  };
+  console.log(booking);
   return (
     <div>
       <div className="flex justify-evenly mb-[32px]">
@@ -177,7 +219,9 @@ const MyParcels = () => {
                 <td>
                   {item.status === "delivered" ? (
                     <>
-                      <button className="btn btn-secondary">review</button>
+                      <Link to={`/dashboard/review/${item._id}`}>
+                        <button className="btn btn-secondary">review</button>
+                      </Link>
                     </>
                   ) : (
                     <>{item.status}</>
@@ -201,13 +245,13 @@ const MyParcels = () => {
                   {item.status === "pending" ? (
                     <button
                       className="btn"
-                      onClick={() => handleUpdate(item._id)}
+                      onClick={() => handleCancel(item._id)}
                     >
                       Cancel
                     </button>
                   ) : (
                     <button className="btn" disabled>
-                      Cancel
+                      Cancelled
                     </button>
                   )}
                 </td>

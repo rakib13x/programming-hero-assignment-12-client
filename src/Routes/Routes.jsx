@@ -16,6 +16,7 @@ import AllDeliveryMen from "../pages/Dashboard/Admin/AllDeliveryMen/AllDeliveryM
 import Statistics from "../pages/Dashboard/Admin/Statistics/Statistics";
 import AdminRoute from "./AdminRoute";
 import AdminHome from "../pages/Dashboard/Admin/AdminHome/AdminHome";
+import GiveReview from "../pages/Dashboard/Users/GiveReview/GiveReview";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,11 @@ export const router = createBrowserRouter([
     ),
     children: [
       //normal user routes
+
+      {
+        path: "review/:id",
+        element: <GiveReview />,
+      },
       {
         path: "book-a-parcel",
         element: <BookAParcel />,
