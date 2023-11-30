@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const MyDeliveryList = () => {
   const { user } = useContext(AuthContext);
@@ -169,7 +170,9 @@ const MyDeliveryList = () => {
                     </td>
                     <td>
                       {user.status === "delivered" ? (
-                        <button className="btn btn-secondary">Review</button>
+                        <Link to={`/dashboard/my-delivery-list/${user._id}`}>
+                          <button className="btn btn-secondary">Review</button>
+                        </Link>
                       ) : (
                         <button
                           className="btn btn-secondary"

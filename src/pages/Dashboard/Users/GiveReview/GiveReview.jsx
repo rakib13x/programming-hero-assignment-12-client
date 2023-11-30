@@ -30,6 +30,7 @@ const GiveReview = () => {
       rating: parseFloat(data.rating),
       feedback: data.feedback,
       deliverymanId: data.deliverymanId,
+      productId: data.productId,
     };
     console.log(giveReview);
 
@@ -117,6 +118,19 @@ const GiveReview = () => {
                   defaultValue={deliveryMenID}
                   readOnly
                   className="input input-bordered w-full "
+                />
+              </div>
+              <div className="form-control w-1/2 my-6">
+                <label className="label">
+                  <span className="label-text">Product Id</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="productId"
+                  {...register("productId", { required: true })}
+                  defaultValue={id}
+                  readOnly
+                  className="input input-bordered w-full"
                 />
               </div>
             </div>

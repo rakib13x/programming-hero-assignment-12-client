@@ -17,6 +17,7 @@ import Statistics from "../pages/Dashboard/Admin/Statistics/Statistics";
 import AdminRoute from "./AdminRoute";
 import AdminHome from "../pages/Dashboard/Admin/AdminHome/AdminHome";
 import GiveReview from "../pages/Dashboard/Users/GiveReview/GiveReview";
+import ProductDeliveryReview from "../pages/Dashboard/DeliveryMen/ProductDeliveryReview/ProductDeliveryReview";
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,11 @@ export const router = createBrowserRouter([
         path: "my-delivery-list",
         element: <MyDeliveryList />,
       },
+      {
+        path: "my-delivery-list/:id",
+        element: <ProductDeliveryReview />,
+      },
+
       {
         path: "my-reviews",
         element: <MyReviews />,
