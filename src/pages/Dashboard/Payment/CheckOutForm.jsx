@@ -2,7 +2,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Payment from "./Payment";
-
+import Confetti from "react-confetti";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,10 @@ const CheckOutForm = () => {
   console.log(totalPrice);
   const [showConfetti, setShowConfetti] = useState(false);
   const axiosPublic = useAxiosPublic();
+  console.log("showConfetti:", showConfetti);
+
+  const yourWidthValue = 800;
+  const yourHeightValue = 800;
   useEffect(() => {
     if (totalPrice > 0) {
       axiosPublic
@@ -95,7 +99,7 @@ const CheckOutForm = () => {
         if (res.data?.paymentResult?.insertedId) {
           Swal.fire({
             title: "Payment success",
-            text: "Thank you for shopping from us.",
+            text: "Thank you for sir for believing us.",
             icon: "success",
           });
           navigate("/dashboard/paymentHistory");
@@ -128,6 +132,9 @@ const CheckOutForm = () => {
       >
         Pay
       </button>
+      {showConfetti && (
+        <Confetti width={yourWidthValue} height={yourHeightValue} />
+      )}
       <p className="text-red-500">{error}</p>
       {transactionId && (
         <p className="text-green-600">Your transaction id:{transactionId}</p>

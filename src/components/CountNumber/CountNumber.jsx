@@ -14,10 +14,12 @@ const CountNumber = () => {
     },
   });
 
+  const deliveredStats = stats.delivered?.[0];
+  const deliveredCount = deliveredStats?.totalDelivered || 0;
   const status = [
     { name: "registered Users", stat: stats.users },
     { name: "total Booking", stat: stats.booked },
-    { name: "Parcel Delivered", stat: stats.delivered[0].totalDelivered },
+    { name: "Parcel Delivered", stat: deliveredCount },
   ];
   return (
     <div className="pb-8 pt-8">
@@ -34,7 +36,7 @@ const CountNumber = () => {
               {item.name}
             </dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-              <CountUp start={0} end={item.stat} duration={300} />
+              <CountUp start={0} end={item.stat} duration={100} />
             </dd>
           </div>
         ))}

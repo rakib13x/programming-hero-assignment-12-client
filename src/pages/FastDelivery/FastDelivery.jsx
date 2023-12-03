@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import fastDelivery from "../../assets/fastDelivery.json";
+import fastDelivery from "../../../public/fastDelivery.json";
 import { IoCall } from "react-icons/io5";
 const FastDelivery = () => {
   return (

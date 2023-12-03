@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
+import LogIn from "../../assets/images/login.png";
 
 const SignUp = () => {
   const axiosPublic = useAxiosPublic();
@@ -47,23 +48,27 @@ const SignUp = () => {
             }
           });
         })
-        .catch((error) => console.log(error));
+        .catch((error) =>
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "U have Provided wrong information or U are already registered",
+          })
+        );
     });
   };
 
   return (
     <>
       <Helmet>
-        <title>Bistro | SignUp</title>
+        <title>SignUp | SignUp</title>
       </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
+            <h1 className="text-5xl font-bold">Register</h1>
             <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+              <img src={LogIn} alt="" />
             </p>
           </div>
           <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

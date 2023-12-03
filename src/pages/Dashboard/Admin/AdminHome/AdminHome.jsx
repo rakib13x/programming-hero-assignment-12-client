@@ -3,6 +3,7 @@ import useAuth from "../../../../hooks/useAuth";
 import Chart from "react-apexcharts";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 
 const AdminHome = () => {
   const { user } = useAuth();
@@ -154,12 +155,16 @@ const AdminHome = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Shiply | Admin Home</title>
+      </Helmet>
       <h2 className="text-4xl font-bold">
         <span>Hi, welcome </span>
         {user?.displayName ? user.displayName : "Back"}
       </h2>
       <div className="">
         <div className="">
+          <h1 className="pt-4 pl-5 font-semibold">Booking by date</h1>
           <div className="lg:flex lg:flex-row gap-10">
             <Chart options={options} series={series} type="bar" width="500" />
             {/* <Chart options={options} series={series} type="line" width="500" /> */}

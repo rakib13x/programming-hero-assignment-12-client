@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import set from "../../assets/set.json";
+import set from "../../../public/set.json";
 const Hero = () => {
   return (
     <div>
@@ -9,12 +9,12 @@ const Hero = () => {
             <div class="flex items-center flex-wrap px-2 md:px-0">
               <div class="relative lg:w-6/12 lg:py-24 xl:py-32">
                 <h1 class="font-bold text-4xl text-yellow-900 md:text-5xl lg:w-10/12">
-                  Your favorite dishes, right at your door
+                  Your parcel delivery, right at your door
                 </h1>
                 <form action="" class="w-full mt-12">
                   <div class="relative flex p-1 rounded-full bg-white border border-yellow-200 shadow-md md:p-2">
                     <input
-                      placeholder="Your favorite food"
+                      placeholder="Your Parcel"
                       class="w-full p-4 rounded-full"
                       type="text"
                     />
@@ -38,11 +38,11 @@ const Hero = () => {
                   </div>
                 </form>
                 <p class="mt-8 text-gray-700 lg:w-10/12">
-                  Sit amet consectetur adipisicing elit.{" "}
+                  we try our best for {""}
                   <a href="#" class="text-yellow-700">
-                    connection
+                    deliver
                   </a>{" "}
-                  tenetur nihil quaerat suscipit, sunt dignissimos.
+                  parcel to our beloved customer as soon as possible.
                 </p>
               </div>
               <div class="ml-auto -mb-24 lg:-mb-56 lg:w-6/12 pb-8">

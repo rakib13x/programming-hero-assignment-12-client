@@ -1,8 +1,8 @@
 import React from "react";
 import Lottie from "lottie-react";
-import onTimeDelivery from "../../assets/onTimeDelivery.json";
-import pickUp from "../../assets/pickUp.json";
-import trackParcel from "../../assets/trackParcel.json";
+import onTimeDelivery from "../../../public/onTimeDelivery.json";
+import pickUp from "../../../public/pickUp.json";
+import trackParcel from "/public/trackParcel.json";
 
 const Service = () => {
   return (
@@ -46,7 +46,7 @@ const Service = () => {
                   Pick up point
                 </p>
                 <p className="text-base leading-none text-center text-gray-600 mt-4">
-                  Therapeutic Essential Oil
+                  pick your delivery
                 </p>
               </div>
             </div>

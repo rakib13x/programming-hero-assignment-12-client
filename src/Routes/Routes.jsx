@@ -20,11 +20,13 @@ import GiveReview from "../pages/Dashboard/Users/GiveReview/GiveReview";
 import ProductDeliveryReview from "../pages/Dashboard/DeliveryMen/ProductDeliveryReview/ProductDeliveryReview";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import ErrorPage from "../pages/Error/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -47,6 +49,7 @@ export const router = createBrowserRouter([
         <Dashboard />
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage />,
     children: [
       //normal user routes
 

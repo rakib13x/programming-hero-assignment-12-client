@@ -15,16 +15,26 @@ const SocialLogin = () => {
         name: result.user?.displayName,
         role: "user",
       };
-      axiosPublic.post("/users", userInfo).then((res) => {
-        console.log(res.data);
-        navigate("/");
-      });
+      axiosPublic
+        .post("/users", userInfo)
+        .then((res) => {
+          console.log(res.data);
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "wrong Information",
+          });
+        });
     });
   };
   return (
     <div className="p-8">
       <div className="divider"></div>
-      <div>
+      <div className=" flex justify-center">
         <button onClick={handleGoogleSignIn} className="btn">
           <FaGoogle className="mr-4" />
           Google

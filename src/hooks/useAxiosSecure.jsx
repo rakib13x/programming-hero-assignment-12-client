@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://shiply-6qqtoap8j-rakib13x-gmailcom.vercel.app",
 });
 const useAxiosSecure = () => {
   const navigate = useNavigate();
@@ -23,21 +23,7 @@ const useAxiosSecure = () => {
   );
 
   // intercepts 401 and 403 status
-  axiosSecure.interceptors.response.use(
-    function (response) {
-      return response;
-    },
-    async (error) => {
-      const status = error.response.status;
-      console.log("status error in the interceptor", status);
-      //for 401 or 403 logout the user and move the user to the login page
-      if (status === 401 || status === 403) {
-        await logOut();
-        navigate("/login");
-      }
-      return Promise.reject(error);
-    }
-  );
+  
   return axiosSecure;
 };
 

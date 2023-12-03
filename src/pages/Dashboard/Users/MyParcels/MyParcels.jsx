@@ -113,9 +113,21 @@ const MyParcels = () => {
           );
 
           Swal.fire({
-            title: `Order Cancelled`,
-            text: `You have cancelled this order`,
-            icon: "error",
+            title: "Are you sure u want cancel this order?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: "Cancelled!",
+                text: "Your order has been Cancelled.",
+                icon: "success",
+              });
+            }
           });
         } else {
           console.log("Booking not found or not updated");

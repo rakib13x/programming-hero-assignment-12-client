@@ -49,6 +49,7 @@ const BookAParcel = () => {
 
     const bookingDate = new Date();
     const deliveryMenID = "";
+    const approxDate = "";
     // const res = await axiosPublic.post({
     //   headers: {
     //     "content-type": "multipart/form-data",
@@ -72,6 +73,7 @@ const BookAParcel = () => {
       status: "pending",
       bookingDate: bookingDate,
       deliveryMenID: deliveryMenID,
+      approxDate: data.approxDate,
     };
     console.log(bookingItem);
 
@@ -81,8 +83,8 @@ const BookAParcel = () => {
       reset();
       //show success popup
       Swal.fire({
-        title: `${data.name} Added`,
-        text: `You have added ${data.name}  to the menu`,
+        title: `Thank You`,
+        text: `You have booked a parcel`,
         icon: "success",
       });
     }
@@ -279,7 +281,7 @@ const BookAParcel = () => {
                   document.getElementById("my_modal_1").showModal()
                 }
               >
-                open modal
+                Select Your location
               </button>
               <dialog id="my_modal_1" className="modal">
                 <div className="modal-box">
@@ -297,7 +299,9 @@ const BookAParcel = () => {
               </dialog>
             </div>
           </div>
-          <button className="btn">Book Your Parcel</button>
+          <div className="flex justify-center pt-8">
+            <button className="btn">Book Your Parcel</button>
+          </div>
         </form>
       </div>
     </div>

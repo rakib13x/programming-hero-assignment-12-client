@@ -40,8 +40,8 @@ const GiveReview = () => {
       reset();
       //show success popup
       Swal.fire({
-        title: `${data.name} Added`,
-        text: `You have added ${data.name}  to the menu`,
+        title: `Review Added`,
+        text: `You have given a review`,
         icon: "success",
       });
     }

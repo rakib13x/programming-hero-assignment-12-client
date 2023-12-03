@@ -1,9 +1,9 @@
 import useAllParcels from "../../../../hooks/useAllParcels";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery, QueryCache } from "@tanstack/react-query";
-
+import { format, parseISO } from "date-fns";
 import useDeliveryBoy from "../../../../hooks/useDeliveryBoy";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const AllParcels = () => {
@@ -12,35 +12,73 @@ const AllParcels = () => {
   const [bookings, setBookings] = useState([]);
   const [selectedDeliveryManID, setSelectedDeliveryManID] = useState(null);
   const [selectedDeliveryManMail, setSelectedDeliveryManMail] = useState(null);
+  const [selectedApproxDate, setSelectedApproxDate] = useState(null);
+
   const axiosSecure = useAxiosSecure();
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
+  const handleFromDateChange = (e) => {
+    setFromDate(e.target.value);
+  };
+
+  const handleToDateChange = (e) => {
+    setToDate(e.target.value);
+  };
+
+  const handleApproxDateChange = (e) => {
+    setSelectedApproxDate(e.target.value);
+  };
+
   const {
     data: parcels = [],
     refetch,
     status,
   } = useQuery({
-    queryKey: ["bookings"],
+    queryKey: ["parcels", fromDate, toDate],
     queryFn: async () => {
-      const res = await axiosSecure.get("/bookings");
-      console.log(res.data);
+      const isoFromDate = fromDate
+        ? new Date(`${fromDate}T00:00:00.000Z`).toISOString()
+        : null;
+      const isoToDate = toDate
+        ? new Date(`${toDate}T23:59:59.999Z`).toISOString()
+        : null;
+
+      console.log("Query parameters:", isoFromDate, isoToDate);
+
+      if (!isoFromDate || !isoToDate) {
+        console.error("Invalid fromDate or toDate");
+        return [];
+      }
+
+      const res = await axiosSecure.get(
+        `/bookings?fromDate=${isoFromDate}&toDate=${isoToDate}`
+      );
+      console.log("Response from backend:", res.data);
       return res.data;
     },
-    onSuccess: (data) => {
-      console.log("Data after successful fetch:", data);
-      // Manually update the cache
-      QueryCache.setQueryData(["bookings"], data);
-    },
+    // Remove enabled property to fetch data on component mount
   });
+  console.log(parcels);
 
-  console.log("Query status:", status);
+  useEffect(() => {
+    // Log data when it is available
+    console.log("Parcels data:", parcels);
+  }, [parcels]);
   const [deliveryman] = useDeliveryBoy();
   const deliverymen = deliveryman.filter((user) => user.role === "deliveryman");
 
   const handleOnTheWay = (item) => {
     const deliveryMenID = selectedDeliveryManID || null;
     const deliveryMenMail = selectedDeliveryManName;
+    const approxDate = selectedApproxDate;
 
     axiosSecure
-      .patch(`/bookings/${item._id}`, { deliveryMenID, deliveryMenMail })
+      .patch(`/bookings/${item._id}`, {
+        deliveryMenID,
+        deliveryMenMail,
+        approxDate,
+      })
       .then((res) => {
         console.log("Patch Response:", res.data);
         document.getElementById(`my_modal_${item._id}`).close();
@@ -57,6 +95,7 @@ const AllParcels = () => {
                     status: "on the way",
                     deliveryMenID: selectedDeliveryManID,
                     deliveryMenMail: selectedDeliveryManName,
+                    approxDate,
                   }
                 : booking
             )
@@ -88,8 +127,49 @@ const AllParcels = () => {
 
   console.log(selectedDeliveryManID);
   console.log(selectedDeliveryManMail);
+  console.log(selectedApproxDate);
   return (
     <div>
+      <div>
+        <form
+          action=""
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <div className="flex gap-6">
+            <div className="form-control w-full my-6">
+              <label className="label">
+                <span className="label-text">from:</span>
+              </label>
+              <input
+                type="date"
+                placeholder="Price"
+                // {...register("price", { required: true })}
+                // value={totalPrice}
+                value={fromDate}
+                onChange={handleFromDateChange}
+                className="input input-bordered w-full "
+              />
+            </div>
+            <div className="form-control w-full my-6">
+              <label className="label">
+                <span className="label-text">to:</span>
+              </label>
+              <input
+                type="date"
+                placeholder="Price"
+                // {...register("price", { required: true })}
+                // value={totalPrice}
+                value={toDate}
+                onChange={handleToDateChange}
+                className="input input-bordered w-full "
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <h1 className="text-center text-3xl font-semibold py-4">All Parcels</h1>
       <div className="overflow-x-auto ">
         <table className="table w-full">
           {/* head */}
@@ -174,6 +254,14 @@ const AllParcels = () => {
                               value={selectedDeliveryManName}
                               readOnly
                               placeholder="Selected Delivery Man"
+                              className="select select-bordered w-[310px]"
+                            />
+                            <input
+                              type="date"
+                              placeholder="pick a date"
+                              className="select select-bordered w-[310px]"
+                              value={selectedApproxDate}
+                              onChange={handleApproxDateChange}
                             />
                           </div>
                           <div className="mt-6 flex ml-[60px]">

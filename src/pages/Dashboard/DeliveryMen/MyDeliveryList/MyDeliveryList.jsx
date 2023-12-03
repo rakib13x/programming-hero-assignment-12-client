@@ -117,7 +117,7 @@ const MyDeliveryList = () => {
     <div>
       <div>
         <div className="flex justify-evenly my-4">
-          <h2 className="text-3xl">All Users</h2>
+          <h2 className="text-3xl">My Delivery List</h2>
           <h2 className="text-3xl">Total Users:{userBookings.length}</h2>
         </div>
         <div>
@@ -146,7 +146,7 @@ const MyDeliveryList = () => {
                     <td>{user.receiver}</td>
                     <td>{user.phone}</td>
                     <td>{user.date}</td>
-                    <td>faka</td>
+                    <td>{user.approxDate}</td>
                     <td>{user.phone2}</td>
                     <td>
                       {user.latitude}
