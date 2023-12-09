@@ -1,8 +1,25 @@
-# React + Vite
+<p align="center">
+  <strong >My Project</strong>
+  <p> Here I have given my project link ,that I have build.I have mentioned about the project feature also.</p>
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+<p align="center">
+  <a href="https://shiply-ea44d.web.app/" style="font-size: 24px; text-align: center;">
+    https://shiply-ea44d.web.app
+  </a>
+</p>
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p align="center">
+  <strong>Project Features</strong>
+</p>
+
+- Feature 1: User Can Book a Parcel.
+- Feature 2: User can cancel a parcel if the delivery status is pending.
+- Feature 3: admin can assign a deliveryman for a particular booked parcel.
+- Feature 4: User can  give a deiveryman review if they received their parcel.
+- Feature 5: Here's people can register as a normal user or deliveryman.
+
+---
